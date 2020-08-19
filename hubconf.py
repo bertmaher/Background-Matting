@@ -27,7 +27,7 @@ def _collate_filter_none(batch):
 
 
 class Model:
-    def __init__(self, device=None, jit=False):
+    def __init__(self, device=None, jit=True):
         self.device = device
         self.jit = jit
         self.opt = Namespace(**{
