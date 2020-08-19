@@ -80,11 +80,11 @@ class Model:
         self.optimizerG = optim.Adam(netG.parameters(), lr=1e-4)
         self.optimizerD = optim.Adam(netD.parameters(), lr=1e-5)
 
-        tb_dir = 'TB_Summary/' + self.opt.name
+        tb_dir = '/home/circleci/project/benchmark/models/Background-Matting/TB_Summary/' + self.opt.name
         if not os.path.exists(tb_dir):
             os.makedirs(tb_dir)
         self.log_writer = SummaryWriter(tb_dir)
-        self.model_dir = 'Models/' + self.opt.name
+        self.model_dir = '/home/circleci/project/benchmark/models/Background-Matting/Models/' + self.opt.name
         if not os.path.exists(self.model_dir):
             os.makedirs(self.model_dir)
 
