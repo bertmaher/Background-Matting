@@ -13,7 +13,9 @@ def composite4(fg, bg, a):
 
 def compose_image_withshift(alpha_pred,fg_pred,bg,seg):
 
-    image_sh=torch.zeros(fg_pred.shape).cuda()
+    image_sh=torch.zeros(fg_pred.shape)
+    if alpha_pred.is_cuda:
+        image_sh = image_sh.cuda()
 
     for t in range(0,fg_pred.shape[0]):
         al_tmp=to_image(seg[t,...]).squeeze(2)
@@ -31,7 +33,9 @@ def compose_image_withshift(alpha_pred,fg_pred,bg,seg):
 
         image_sh[t,...]=fg_pred_sh*alpha_pred_sh + (1-alpha_pred_sh)*bg[t,...]
 
-    return torch.autograd.Variable(image_sh.cuda())
+    if alpha_pred.is_cuda:
+        image_sh = image_sh.cuda()
+    return torch.autograd.Variable(image_sh)
 
 def get_bbox(mask,R,C):
     where = np.array(np.where(mask))
