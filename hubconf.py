@@ -38,9 +38,14 @@ class Model:
             'name': 'Real_fixed'
         })
 
+        scriptdir = os.path.dirname(os.path.realpath(__file__))
+        csv_file = "Video_data_train_processed.csv"
+        with open("Video_data_train.csv", "r") as r:
+            with open(csv_file, "w") as w:
+                w.write(r.read().format(scriptdir=scriptdir))
         data_config_train = {
             'reso': (self.opt.resolution, self.opt.resolution)}
-        traindata = VideoData(csv_file='Video_data_train.csv',
+        traindata = VideoData(csv_file=csv_file,
                               data_config=data_config_train, transform=None)
         self.train_loader = torch.utils.data.DataLoader(
             traindata, batch_size=self.opt.batch_size, shuffle=True, num_workers=self.opt.batch_size, collate_fn=_collate_filter_none)
@@ -80,13 +85,8 @@ class Model:
         self.optimizerG = optim.Adam(netG.parameters(), lr=1e-4)
         self.optimizerD = optim.Adam(netD.parameters(), lr=1e-5)
 
-        tb_dir = '/home/circleci/project/benchmark/models/Background-Matting/TB_Summary/' + self.opt.name
-        if not os.path.exists(tb_dir):
-            os.makedirs(tb_dir)
-        self.log_writer = SummaryWriter(tb_dir)
-        self.model_dir = '/home/circleci/project/benchmark/models/Background-Matting/Models/' + self.opt.name
-        if not os.path.exists(self.model_dir):
-            os.makedirs(self.model_dir)
+        self.log_writer = SummaryWriter(scriptdir)
+        self.model_dir = scriptdir
 
         self._maybe_trace()
 
