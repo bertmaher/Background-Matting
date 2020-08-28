@@ -265,14 +265,14 @@ class Model:
             del mask, back_rnd, mask0, seg_gt, mask1, bg, alpha_pred, alpha_pred_sup, image, fg_pred_sup, fg_pred, seg, multi_fr, image_sh, bg_sh, fake_response, real_response, al_loss, fg_loss, comp_loss, lossG, lossD, loss_ganD_real, loss_ganD_fake, loss_ganG
 
         if (epoch % 2 == 0):
-            torch.save(self.netG.state_dict(), self.model_dir +
-                       'netG_epoch_%d.pth' % (epoch))
-            torch.save(self.optimizerG.state_dict(), self.model_dir +
-                       'optimG_epoch_%d.pth' % (epoch))
-            torch.save(self.netD.state_dict(), self.model_dir +
-                       'netD_epoch_%d.pth' % (epoch))
-            torch.save(self.optimizerD.state_dict(), self.model_dir +
-                       'optimD_epoch_%d.pth' % (epoch))
+            torch.save(self.netG.state_dict(),
+                       os.path.join(self.model_dir, 'netG_epoch_%d.pth' % (epoch)))
+            torch.save(self.optimizerG.state_dict(),
+                       os.path.join(self.model_dir, 'optimG_epoch_%d.pth' % (epoch)))
+            torch.save(self.netD.state_dict(),
+                       os.path.join(self.model_dir, 'netD_epoch_%d.pth' % (epoch)))
+            torch.save(self.optimizerD.state_dict(),
+                       os.path.join(self.model_dir, 'optimD_epoch_%d.pth' % (epoch)))
 
             # Change weight every 2 epoch to put more stress on discriminator weight and less on pseudo-supervision
             wt = wt/2
